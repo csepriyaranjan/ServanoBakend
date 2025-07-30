@@ -16,8 +16,6 @@ export const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
-    console.log('Register attempt:', { name, email });
-
     const userExists = await User.findOne({ email });
 
     if (userExists) {
@@ -26,9 +24,6 @@ export const registerUser = async (req, res) => {
     }
 
     const user = await User.create({ name, email, password });
-
-    console.log('User registered:', user._id);
-
     res.status(201).json({
       _id: user._id,
       name: user.name,
@@ -36,7 +31,6 @@ export const registerUser = async (req, res) => {
       token: generateToken(user._id),
     });
   } catch (err) {
-    console.error('Register error:', err.message, err.stack);
     res.status(500).json({ message: 'Server error during registration' });
   }
 };
@@ -48,8 +42,6 @@ export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    console.log('Login attempt:', { email });
-
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -64,8 +56,6 @@ export const loginUser = async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    console.log('Login success:', user._id);
-
     res.json({
       _id: user._id,
       name: user.name,
@@ -73,7 +63,6 @@ export const loginUser = async (req, res) => {
       token: generateToken(user._id),
     });
   } catch (err) {
-    console.error('Login error:', err.message, err.stack);
     res.status(500).json({ message: 'Server error during login' });
   }
 };
