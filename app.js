@@ -9,7 +9,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: "http://localhost:5173", // frontend origin
+  origin: "https://servano.vercel.app/", // frontend origin
   credentials: true
 }));
 
