@@ -9,8 +9,15 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: "https://servano.vercel.app", // frontend origin
-  credentials: true
+  origin: function (origin, callback) {
+    const allowedOrigins = ['https://servano.vercel.app'];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
 }));
 
 app.use(express.json());
