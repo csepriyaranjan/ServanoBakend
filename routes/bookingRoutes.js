@@ -4,6 +4,7 @@ import {
   getUserBookings,
   getAllBookings,
   updateBookingStatus,
+  deleteBooking,
 } from '../controllers/bookingController.js';
 import { protect, adminOnly } from '../middlewares/authMiddleware.js';
 
@@ -20,5 +21,7 @@ router.get('/', protect,    adminOnly, getAllBookings);
 
 // Admin: Update booking status
 router.put('/:id/status', protect, adminOnly, updateBookingStatus);
+
+router.delete('/:id/delete', protect, adminOnly, deleteBooking);
 
 export default router;
