@@ -8,18 +8,7 @@ import bookingRoutes from './routes/bookingRoutes.js';
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: function (origin, callback) {
-    const allowedOrigins = ['https://servano.vercel.app'];
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-}));
-
+app.use(cors());
 app.use(express.json());
 
 // Routes
