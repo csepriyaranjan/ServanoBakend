@@ -60,14 +60,27 @@ export const updateBookingStatus = async (req, res) => {
       return res.status(404).json({ message: "Booking not found" });
     }
 
-    booking.status = req.body.status || booking.status;
+    const { status } = req.body;
+    if (!status) {
+      return res.status(400).json({ message: "Status is required" });
+    }
+
+    // Optional: validate status value (if you have a list of allowed statuses)
+    const allowedStatuses = ["Pending", "Confirmed", "Completed", "Cancelled"];
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).json({ message: "Invalid status value" });
+    }
+
+    booking.status = status;
     await booking.save();
 
     res.json({ message: "Booking status updated", booking });
   } catch (error) {
-    res.status(500).json({ message: "Failed to update booking status" });
+    console.error("Error updating booking status:", error);
+    res.status(500).json({ message: "Failed to update booking status", error: error.message });
   }
 };
+
 
 export const deleteBooking = async (req, res) => {
   try {
