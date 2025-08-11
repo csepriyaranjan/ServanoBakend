@@ -65,8 +65,7 @@ export const updateBookingStatus = async (req, res) => {
       return res.status(400).json({ message: "Status is required" });
     }
 
-    // Optional: validate status value (if you have a list of allowed statuses)
-    const allowedStatuses = ["Pending", "Confirmed", "Completed", "Cancelled"];
+    const allowedStatuses = ["Pending", "Accepted", "Completed", "Canceled"]; // <-- fixed here
     if (!allowedStatuses.includes(status)) {
       return res.status(400).json({ message: "Invalid status value" });
     }
@@ -80,6 +79,7 @@ export const updateBookingStatus = async (req, res) => {
     res.status(500).json({ message: "Failed to update booking status", error: error.message });
   }
 };
+
 
 
 export const deleteBooking = async (req, res) => {
